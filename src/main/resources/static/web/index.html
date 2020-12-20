@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.js"
+            integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+<h1>Liga</h1>
+
+<table id="matches">
+<tr>
+    <td>Liga</td>
+    <td>Date</td>
+    <td>Instance</td>
+    <td>Teams</td>
+</tr>
+</table>
+
+
+</body>
+</html>
+
+<script>
+    $(document).ready(function(){
+        $.getJSON("game.json", function(data){
+            var matchs = '';
+            $.each(data, function(key, value){
+                matchs += '<tr>';
+                matchs += '<td>' +value.Liga+ '</td>';
+                matchs += '<td>' +value.Date+ '</td>';
+                matchs += '<td>' +value.Instance+ '</td>';
+                matchs += '<td>' +value.Teams+ '</td>';
+                matchs += '<tr>';
+            });
+            $('#matches').append(matchs);
+        });
+    });
+</script>

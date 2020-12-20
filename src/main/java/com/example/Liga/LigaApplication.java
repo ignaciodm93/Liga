@@ -1,7 +1,11 @@
 package com.example.Liga;
 
+import com.example.Liga.model.Liga;
+import com.example.Liga.model.Match;
 import com.example.Liga.model.Player;
 import com.example.Liga.model.Team;
+import com.example.Liga.repository.LigaRepository;
+import com.example.Liga.repository.MatchRepository;
 import com.example.Liga.repository.PlayerRepository;
 import com.example.Liga.repository.TeamRepository;
 import org.apache.tomcat.jni.Local;
@@ -12,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 
 
 import java.text.DateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -25,7 +30,7 @@ public class LigaApplication {
 
 
 	@Bean
-	public CommandLineRunner initData(TeamRepository teamRepository, PlayerRepository playerRepository){
+	public CommandLineRunner initData(TeamRepository teamRepository, PlayerRepository playerRepository, MatchRepository matchRepository, LigaRepository ligaRepository){
 		return (args) -> {
 
 			//region Teams
@@ -38,6 +43,35 @@ public class LigaApplication {
 			Team Boca = new Team("Boca Juniors", LocalDate.of(1905, 04, 3));
 			Boca.setShield("https://upload.wikimedia.org/wikipedia/commons/7/7f/Escudo_del_Club_Atl%C3%A9tico_Boca_Juniors_2012.svg");
 			teamRepository.save(Boca);
+
+			Team Barcelona = new Team("Barcelona", LocalDate.of(1899 , 9, 29));
+			Barcelona.setShield("https://lh3.googleusercontent.com/OQZi4ckWAs7UrOlZEPefXZgJOcdJuSM5FSH9zqD5rMg6c2MOaxcKpV5IMrb1Tju98fWyNmcI33E4RGb0uC09Ej4W");
+			teamRepository.save(Barcelona);
+
+
+			Team RealMadrid = new Team("Real Madrid", LocalDate.of(1902 , 03, 6));
+			RealMadrid.setShield("https://assets.stickpng.com/images/584a9b47b080d7616d298778.png");
+			teamRepository.save(RealMadrid);
+
+
+			Team Palmeiras = new Team("Palmeiras", LocalDate.of(1910, 1, 29));
+			Palmeiras.setShield("https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Palmeiras_logo.svg/1200px-Palmeiras_logo.svg.png");
+			teamRepository.save(Palmeiras);
+
+			Team Santos = new Team("Santos", LocalDate.of(1889, 6, 10));
+			//Santos.setShield();
+			teamRepository.save(Santos);
+
+			Team Racing = new Team("Racing", LocalDate.of(1920, 4, 24));
+			//Racing.setShield();
+			teamRepository.save(Racing);
+
+			Team Gremio = new Team("Gremio", LocalDate.of(1900, 5, 9));
+			//Gremio.setShield();
+			teamRepository.save(Gremio);
+
+
+
 			//endregion
 
 			//region Team cups
@@ -56,9 +90,29 @@ public class LigaApplication {
 			Boca.addCup("Libertadores 2007");
 			Boca.addCup("Intercontinental 2000");
 			teamRepository.save(Boca);
-			//endregion
 
-			//endregion
+
+			Barcelona.addCup("Champions 2006");
+			Barcelona.addCup("Champions 2009");
+			Barcelona.addCup("Champions 2015");
+			Barcelona.addCup("Champions 2006");
+			Barcelona.addCup("Mundial de Clubes 2011");
+			Barcelona.addCup("Mundial de Clubes 2015");
+			teamRepository.save(Barcelona);
+
+			RealMadrid.addCup("Champions 2016");
+			RealMadrid.addCup("Champions 2017");
+			RealMadrid.addCup("Champions 2018");
+			RealMadrid.addCup("Champions 2014");
+			RealMadrid.addCup("Champions 2002");
+			RealMadrid.addCup("Champions 2000");
+			RealMadrid.addCup("Mundial de Clubes 2011");
+			RealMadrid.addCup("Mundial de Clubes 2014");
+			RealMadrid.addCup("Mundial de Clubes 2016");
+			RealMadrid.addCup("Mundial de Clubes 2017");
+			RealMadrid.addCup("Mundial de Clubes 2018");
+			teamRepository.save(RealMadrid);
+
 
 
 			//region Players creation
@@ -105,8 +159,66 @@ public class LigaApplication {
 			playerRepository.save(RomanR);
 			//endregion
 
+			Player LionelM = new Player("Lionel", "Messi", 32);
+			Barcelona.addPlayer(LionelM);
+			LionelM.setPosition(Player.Eposition.Striker);
+			playerRepository.save(LionelM);
+
+			Player KarimB = new Player("Karim", "Benzema", 32);
+			RealMadrid.addPlayer(KarimB);
+			KarimB.setPosition(Player.Eposition.Striker);
+			playerRepository.save(KarimB);
+
+			Player SergioR = new Player("Sergio", "Ramos", 34);
+			RealMadrid.addPlayer(SergioR);
+			SergioR.setPosition(Player.Eposition.Defense);
+			playerRepository.save(SergioR);
+
+			Player AntoineG = new Player("Antoine", "Griezmann", 29);
+			Barcelona.addPlayer(AntoineG);
+			AntoineG.setPosition(Player.Eposition.Striker);
+			playerRepository.save(AntoineG);
+
+
 
 			//endregion
+
+			//region Matches
+
+			Match SemisA = new Match("Semifinal A", Date.from(Instant.now()));
+			SemisA.addTeam(River);
+			SemisA.addTeam(Palmeiras);
+			matchRepository.save(SemisA);
+			teamRepository.save(River);
+			teamRepository.save(Palmeiras);
+
+
+
+			Match SemisB = new Match("Semifinal B", Date.from(Instant.now()));
+			SemisB.addTeam(Boca);
+			SemisB.addTeam(RealMadrid);
+			matchRepository.save(SemisB);
+			teamRepository.save(Boca);
+			teamRepository.save(RealMadrid);
+			//endregion
+
+
+			Liga Libertadores2020 = new Liga("Libertadores 2020", "Latinoamerica");
+			Libertadores2020.addTeam(River);
+			Libertadores2020.addTeam(RealMadrid);
+			Libertadores2020.addTeam(Boca);
+			Libertadores2020.addTeam(Palmeiras);
+			ligaRepository.save(Libertadores2020);
+
+
+			Libertadores2020.addMatch(SemisA);
+			Libertadores2020.addMatch(SemisA);
+			ligaRepository.save(Libertadores2020);
+
+			SemisA.setLiga(Libertadores2020);
+			SemisB.setLiga(Libertadores2020);
+			matchRepository.save(SemisA);
+			matchRepository.save(SemisB);
 
 
 		};

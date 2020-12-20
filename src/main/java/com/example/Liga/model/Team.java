@@ -30,6 +30,13 @@ public class Team {
     private Set<Player> players = new HashSet<Player>();
 
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="match_id")
+    private Match match;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="liga_id")
+    private Liga liga;
 
 
     //region Constructores
@@ -111,6 +118,9 @@ public class Team {
 
     }
 
-    //endregion
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+//endregion
 
 }
