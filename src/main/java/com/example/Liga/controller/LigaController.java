@@ -122,6 +122,14 @@ public class LigaController {
     }
 
 
+    
+
+    @RequestMapping("/gitTest")
+    public Team getTeam(){
+        Team newTeam = new Team();
+        return newTeam;
+    }
+
 
 
 }

@@ -21,3 +21,13 @@ function post(){
       showLogin(false);
     });
 }
+
+
+fetch('/api/matches')
+  .then(response => response.json())
+  .then(data => console.log(data))
+
+  for (var i = 0; i < data.length; i++) {
+              $('<td class="textCenter">' + data[i].id + '</td>').appendTo(row);
+              $('<td>' + data[i].name + '</td>').appendTo(row);
+  }
